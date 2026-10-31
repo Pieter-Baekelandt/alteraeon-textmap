@@ -29,6 +29,32 @@
   <p id="no-results" hidden>No areas match your search.</p>
   <noscript><p class="instructions">Search and route finding need JavaScript. All area lists and nearby links remain usable without it.</p></noscript>
 </section>
+  <section class="route-panel" aria-labelledby="route-heading">
+  <h2 id="route-heading">Find a route</h2>
+  <p id="route-help">Start typing an area name, then use the Up and Down arrow keys to choose a suggestion and press Enter to select it. Routes follow the nearby-area links in the snapshot. One-way links may be reversed; those directions are marked inferred. Some areas may not be connected because the source data does not list every connection.</p>
+  <form id="route-form" aria-describedby="route-help" novalidate>
+    <div class="route-field">
+      <label for="route-from">Starting area</label>
+      <div class="combobox">
+        <input id="route-from" type="text" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" aria-controls="route-from-listbox" aria-describedby="route-help" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a name, for example Ralnoth">
+        <input type="hidden" id="route-from-value" name="from">
+        <ul id="route-from-listbox" class="listbox" role="listbox" aria-label="Starting area suggestions" hidden></ul>
+        <p id="route-from-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
+      </div>
+    </div>
+    <div class="route-field">
+      <label for="route-to">Destination area</label>
+      <div class="combobox">
+        <input id="route-to" type="text" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" aria-controls="route-to-listbox" aria-describedby="route-help" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a name, for example Olympus">
+        <input type="hidden" id="route-to-value" name="to">
+        <ul id="route-to-listbox" class="listbox" role="listbox" aria-label="Destination area suggestions" hidden></ul>
+        <p id="route-to-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
+      </div>
+    </div>
+    <button type="submit">Find route</button>
+  </form>
+  <div id="route-output" class="route-output" tabindex="-1" aria-live="polite" aria-atomic="true"></div>
+</section>
 <nav class="region-nav" aria-labelledby="regions-heading">
   <h2 id="regions-heading">Regions</h2>
   <ul><li><a href="#region-0" data-region-link="The Island of Sloe">The Island of Sloe</a> <span class="count">(26 areas)</span></li><li><a href="#region-1" data-region-link="The Island of Kordan">The Island of Kordan</a> <span class="count">(40 areas)</span></li><li><a href="#region-2" data-region-link="The Island of Archais">The Island of Archais</a> <span class="count">(62 areas)</span></li><li><a href="#region-3" data-region-link="The Mainland of Atmir">The Mainland of Atmir</a> <span class="count">(314 areas)</span></li><li><a href="#region-4" data-region-link="The Continent of Ramanek">The Continent of Ramanek</a> <span class="count">(29 areas)</span></li><li><a href="#region-5" data-region-link="The Continent of Suboria">The Continent of Suboria</a> <span class="count">(54 areas)</span></li><li><a href="#region-6" data-region-link="The Continent of Gianasi">The Continent of Gianasi</a> <span class="count">(11 areas)</span></li><li><a href="#region-7" data-region-link="Magical Realms">Magical Realms</a> <span class="count">(2 areas)</span></li><li><a href="#region-8" data-region-link="The Demon Realms">The Demon Realms</a> <span class="count">(24 areas)</span></li><li><a href="#region-9" data-region-link="The Realms of Light">The Realms of Light</a> <span class="count">(14 areas)</span></li><li><a href="#region-10" data-region-link="Outer Planar Realms">Outer Planar Realms</a> <span class="count">(23 areas)</span></li></ul>
@@ -4298,32 +4324,6 @@
 </section>
   </div>
 </main>
-<section class="route-panel" aria-labelledby="route-heading">
-  <h2 id="route-heading">Find a route</h2>
-  <p id="route-help">Start typing an area name, then use the Up and Down arrow keys to choose a suggestion and press Enter to select it. Routes follow the nearby-area links in the snapshot. One-way links may be reversed; those directions are marked inferred. Some areas may not be connected because the source data does not list every connection.</p>
-  <form id="route-form" aria-describedby="route-help" novalidate>
-    <div class="route-field">
-      <label for="route-from">Starting area</label>
-      <div class="combobox">
-        <input id="route-from" type="text" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" aria-controls="route-from-listbox" aria-describedby="route-help" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a name, for example Ralnoth">
-        <input type="hidden" id="route-from-value" name="from">
-        <ul id="route-from-listbox" class="listbox" role="listbox" aria-label="Starting area suggestions" hidden></ul>
-        <p id="route-from-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
-      </div>
-    </div>
-    <div class="route-field">
-      <label for="route-to">Destination area</label>
-      <div class="combobox">
-        <input id="route-to" type="text" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" aria-controls="route-to-listbox" aria-describedby="route-help" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a name, for example Olympus">
-        <input type="hidden" id="route-to-value" name="to">
-        <ul id="route-to-listbox" class="listbox" role="listbox" aria-label="Destination area suggestions" hidden></ul>
-        <p id="route-to-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
-      </div>
-    </div>
-    <button type="submit">Find route</button>
-  </form>
-  <div id="route-output" class="route-output" tabindex="-1" aria-live="polite" aria-atomic="true"></div>
-</section>
 <footer class="page-footer">
   <p>Data from the <a href="https://alteraeon.com:8081/area">Alter Aeon area list</a>. This is an unofficial accessibility project.</p>
   <p>Nearby links are approximate; the source has no coordinates or room-level map.</p>

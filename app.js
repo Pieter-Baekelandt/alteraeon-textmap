@@ -268,18 +268,36 @@ function init() {
 
   let filterTimer;
 
+  function orderedMatches(tokens) {
+    const query = tokens.join(' ');
+    const scored = [];
+    for (const area of areas) {
+      const text = searchText.get(area.id);
+      if (!tokens.every((token) => text.includes(token))) continue;
+      const name = normalize(area.name);
+      let score = 3;
+      if (name === query) score = 0;
+      else if (name.startsWith(tokens[0])) score = 1;
+      else if (name.includes(tokens[0])) score = 2;
+      scored.push({ area, score });
+    }
+    scored.sort((a, b) => a.score - b.score);
+    return scored.map((entry) => entry.area);
+  }
+
   function applyFilter() {
     const rawQuery = searchInput.value.trim();
     const tokens = normalize(rawQuery).split(/\s+/).filter(Boolean);
+    const matches = tokens.length ? orderedMatches(tokens) : areas;
+    const matchIds = new Set(matches.map((area) => area.id));
     const regionCounts = new Map(regionSections.map((section) => [section.dataset.regionName, 0]));
     let visibleCount = 0;
 
     for (const area of areas) {
-      const text = searchText.get(area.id);
-      const matches = tokens.every((token) => text.includes(token));
+      const isMatch = matchIds.has(area.id);
       const element = areaElements.get(area.id);
-      if (element) element.hidden = !matches;
-      if (matches) {
+      if (element) element.hidden = !isMatch;
+      if (isMatch) {
         visibleCount += 1;
         regionCounts.set(area.region, regionCounts.get(area.region) + 1);
       }
@@ -300,6 +318,8 @@ function init() {
       noResults.textContent = `No areas match “${rawQuery}”.`;
       noResults.hidden = visibleCount !== 0;
     }
+
+    return { rawQuery, tokens, matches };
   }
 
   function scheduleFilter() {
@@ -307,10 +327,56 @@ function init() {
     filterTimer = window.setTimeout(applyFilter, 120);
   }
 
+  function revealArea(area, options = {}) {
+    const element = areaElements.get(area.id);
+    if (!element) return;
+    element.hidden = false;
+    if (options.expand) {
+      const details = element.querySelector('details');
+      if (details) details.open = true;
+    }
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    element.focus({ preventScroll: true });
+  }
+
+  function revealRegion(section) {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const heading = section.querySelector('h2, h3');
+    if (!heading) return;
+    if (!heading.hasAttribute('tabindex')) heading.tabIndex = -1;
+    heading.focus({ preventScroll: true });
+  }
+
   searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
     window.clearTimeout(filterTimer);
-    applyFilter();
+    const { rawQuery, tokens, matches } = applyFilter();
+
+    if (!tokens.length || !matches.length) {
+      searchInput.focus();
+      return;
+    }
+
+    const query = tokens.join(' ');
+    const exactArea = matches.find((area) => normalize(area.name) === query);
+    if (exactArea) {
+      revealArea(exactArea, { expand: true });
+      searchStatus.textContent = `Moved to ${exactArea.name} (level ${exactArea.level}) in ${exactArea.region}.`;
+      return;
+    }
+
+    const exactRegion = regionSections.find((section) => normalize(section.dataset.regionName) === query);
+    if (exactRegion) {
+      revealRegion(exactRegion);
+      searchStatus.textContent = `Moved to region ${exactRegion.dataset.regionName}.`;
+      return;
+    }
+
+    const target = matches[0];
+    revealArea(target, { expand: matches.length === 1 });
+    searchStatus.textContent = matches.length === 1
+      ? `Moved to ${target.name} (level ${target.level}).`
+      : `${matches.length} areas match “${rawQuery}”. Moved to the first result, ${target.name} (level ${target.level}).`;
   });
   searchInput.addEventListener('input', scheduleFilter);
   clearButton.addEventListener('click', () => {

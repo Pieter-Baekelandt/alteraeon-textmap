@@ -19,25 +19,6 @@
     <p class="meta">Snapshot generated <time datetime="2026-10-30T19:51:22.181Z">2026-10-30</time> from the <a
         href="https://alteraeon.com:8081/area">Alter Aeon area list</a>.</p>
   </header>
-  <section class="search-panel" aria-labelledby="search-heading">
-    <h2 id="search-heading">Search areas</h2>
-    <form id="search-form" role="search" aria-labelledby="search-heading" autocomplete="off">
-      <label for="area-search">Filter by area name, region, or level</label>
-      <div class="search-row">
-        <input id="area-search" name="q" type="search" spellcheck="false" autocomplete="off"
-          placeholder="e.g. Ralnoth, Mainland, 29" aria-describedby="search-help search-status">
-        <button type="submit" id="search-submit">Go to result</button>
-        <button type="button" id="clear-search">Clear search</button>
-      </div>
-    </form>
-    <p id="search-help">Results update as you type. Multiple words must all match. Press Enter or choose Go to result to jump to the best match.</p>
-    <p id="search-status" role="status" aria-live="polite" aria-atomic="true">599 areas across 11 regions.</p>
-    <p id="no-results" hidden>No areas match your search.</p>
-    <noscript>
-      <p class="instructions">Search and route finding need JavaScript. All area lists and nearby links remain usable
-        without it.</p>
-    </noscript>
-  </section>
   <section class="route-panel" aria-labelledby="route-heading">
     <h2 id="route-heading">Find a route</h2>
     <p id="route-help">Start typing an area name, then use the Up and Down arrow keys to choose a suggestion and press
@@ -71,6 +52,25 @@
       <button type="submit">Find route</button>
     </form>
     <div id="route-output" class="route-output" tabindex="-1" aria-live="polite" aria-atomic="true"></div>
+  </section>
+  <section class="search-panel" aria-labelledby="search-heading">
+    <h2 id="search-heading">Search areas</h2>
+    <form id="search-form" role="search" aria-labelledby="search-heading" autocomplete="off">
+      <label for="area-search">Filter by area name, region, or level</label>
+      <div class="search-row">
+        <input id="area-search" name="q" type="search" spellcheck="false" autocomplete="off"
+          placeholder="e.g. Ralnoth, Mainland, 29" aria-describedby="search-help search-status">
+        <button type="submit" id="search-submit">Go to result</button>
+        <button type="button" id="clear-search">Clear search</button>
+      </div>
+    </form>
+    <p id="search-help">Results update as you type. Multiple words must all match. Press Enter or choose Go to result to jump to the best match.</p>
+    <p id="search-status" role="status" aria-live="polite" aria-atomic="true">599 areas across 11 regions.</p>
+    <p id="no-results" hidden>No areas match your search.</p>
+    <noscript>
+      <p class="instructions">Search and route finding need JavaScript. All area lists and nearby links remain usable
+        without it.</p>
+    </noscript>
   </section>
   <nav class="region-nav" aria-labelledby="regions-heading">
     <h2 id="regions-heading">Regions</h2>
